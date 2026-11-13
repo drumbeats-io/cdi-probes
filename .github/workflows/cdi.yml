@@ -1,3 +1,4 @@
+# Cron Drift Index probes. Schedules are UTC; see README.md.
 name: cdi-probes
 on:
   schedule:
