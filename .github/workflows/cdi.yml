@@ -1,0 +1,21 @@
+name: cdi-probes
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+    - cron: '7 * * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Ping Drumbeats
+        env:
+          BASE: ${{ secrets.DRUMBEATS_BASE }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          case "$SCHEDULE" in
+            '7 * * * *') SLUG=cdi-gha-hourly-07 ;;
+            *)           SLUG=cdi-gha-15m ;;
+          esac
+          curl -fsS -m 10 -o /dev/null "$BASE/$SLUG/success"
